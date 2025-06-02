@@ -70,7 +70,7 @@ You can also use specialized search engines that index IoT devices:
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/DVR_Credential_Scanner.git
+   git clone https://github.com/its-anya/DVR_Credential_Scanner.git
    ```
 
 2. Change to the project directory:
