@@ -7,6 +7,10 @@ certain DVR (Digital Video Recorder) systems.
 
 This tool is provided for **EDUCATIONAL PURPOSES ONLY**. The author and contributors are not responsible for any misuse or damage caused by this program. Using this tool against systems without explicit permission is illegal and may result in criminal charges.
 
+<div align="center">
+  <img src="img/logo.png" alt="DVR Credential Scanner Logo" width="300">
+</div>
+
 ## 📝 About the Vulnerability
 
 - **CVE ID**: CVE-2018-9995
