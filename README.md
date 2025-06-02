@@ -1,6 +1,7 @@
 # DVR Credential Scanner
 
-A simple educational tool to demonstrate the CVE-2018-9995 vulnerability in certain DVR (Digital Video Recorder) systems.
+A simple educational tool to demonstrate the CVE-2018-9995 vulnerability in 
+certain DVR (Digital Video Recorder) systems.
 
 ## ⚠️ Disclaimer
 
@@ -70,7 +71,7 @@ You can also use specialized search engines that index IoT devices:
 
 1. Clone this repository:
    ```
-   git clone https://github.com/its-anya/DVR_Credential_Scanner.git
+   git clone https://github.com/yourusername/DVR_Credential_Scanner.git
    ```
 
 2. Change to the project directory:
@@ -174,16 +175,78 @@ If you receive a different response or an error, the system may not be vulnerabl
 ╰──────────────────────┴──────────────────────┴──────────────────────╯
 ```
 
-## 🔍 Understanding the Vulnerability
+## 💡 How the Vulnerability Works
 
-The vulnerability exists because the DVR systems accept a cookie with `uid=admin` without proper authentication, and then return sensitive information including login credentials in a JSON response.
+### Technical Explanation
 
-The exploit makes a simple HTTP request:
-```
-GET /device.rsp?opt=user&cmd=list HTTP/1.1
-Host: [DVR_HOST]
-Cookie: uid=admin
-```
+The CVE-2018-9995 vulnerability is a classic case of improper authentication in DVR systems. Here's how it works:
+
+1. **Insecure Cookie Handling**: 
+   The vulnerable DVR systems accept the HTTP cookie `uid=admin` without proper verification. This cookie is normally set only after successful authentication, but these systems fail to validate it properly.
+
+2. **API Endpoint Exposure**: 
+   The vulnerable devices expose an API endpoint `/device.rsp?opt=user&cmd=list` that is designed for administrative use. This endpoint returns a list of system users with their credentials.
+
+3. **No Authentication Check**: 
+   When a request is made to this endpoint with the admin cookie, the system incorrectly assumes the request comes from an authenticated administrator and returns sensitive information.
+
+4. **Information Disclosure**: 
+   The response includes usernames, plaintext passwords, and role information for all accounts configured on the DVR.
+
+### Attack Flow
+
+1. Attacker discovers a DVR web interface (often using Google dorks or search engines)
+2. Attacker makes a specially crafted HTTP request to the target:
+   ```
+   GET /device.rsp?opt=user&cmd=list HTTP/1.1
+   Host: [DVR_IP]
+   Cookie: uid=admin
+   ```
+3. Vulnerable DVR responds with JSON containing all user credentials
+4. Attacker can now use these credentials to access the DVR administrative interface
+
+### Impact
+
+This vulnerability allows attackers to:
+1. Obtain full administrative access to the DVR system
+2. View live and recorded video footage
+3. Reconfigure the device
+4. Potentially gain access to the broader network where the DVR is installed
+
+### Why It Persists
+
+Many affected devices:
+- Have outdated firmware that manufacturers no longer update
+- Are installed with default configurations that enable this vulnerability
+- Are directly exposed to the internet without proper security controls
+- Are not regularly maintained or secured by their owners
+
+### Mitigation Strategies
+
+To protect against this vulnerability:
+1. Update DVR firmware to a version that patches this issue
+2. Never expose DVR interfaces directly to the internet
+3. Use a VPN for remote access
+4. Implement network segmentation to isolate IoT/surveillance systems
+5. Change default passwords and use strong authentication
+
+## 📁 Repository File Structure
+
+This repository contains multiple files designed to help you understand and test the CVE-2018-9995 vulnerability:
+
+| File Name | Description |
+|-----------|-------------|
+| `dvr_scanner.py` | The main Python script that automates scanning for the vulnerability. It features colorful console output and interactive mode. |
+| `simple_exploit.py` | A minimalist version of the exploit script with fewer dependencies, ideal for quick testing. |
+| `requirements.txt` | Lists all Python dependencies needed to run the scripts (requests, tableprint, colorama). |
+| `run_scanner.bat` | Windows batch file for easily running the scanner with a double-click. |
+| `README.md` | This file - provides an overview of the project, vulnerability details, and usage instructions. |
+| `QUICK_START_GUIDE.md` | A concise guide to get started quickly with the tool. |
+| `FINDING_DVR_SYSTEMS.md` | Detailed guide on how to find potentially vulnerable DVR systems for testing. |
+| `MANUAL_TESTING.md` | Instructions for manually testing the vulnerability using curl without the Python script. |
+| `LICENSE` | MIT License file for the project. |
+| `.gitignore` | Specifies files that Git should ignore. |
+
 
 ## 📜 License
 
