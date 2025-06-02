@@ -154,6 +154,37 @@ A successful exploitation will return a JSON response containing user credential
 
 If you receive a different response or an error, the system may not be vulnerable to this exploit.
 
+## 🎥 Viewing DVR Camera Feeds
+
+After obtaining credentials, you may want to access the DVR's web interface to view camera feeds. Many older DVR systems use ActiveX controls or other technologies that only work properly in Internet Explorer. To view these camera feeds in modern browsers:
+
+### Using IE Tab Extension
+
+The [IE Tab Chrome Extension](https://chromewebstore.google.com/detail/ie-tab/hehijbfgiekmjfkfjpbkbammjbdenadd) allows you to view DVR camera feeds that require Internet Explorer:
+
+1. Install the IE Tab extension from the Chrome Web Store
+2. Click on the IE Tab icon in your browser
+3. Enter the DVR's URL (e.g., http://192.168.1.100)
+4. Log in using the credentials obtained from the vulnerability scan
+5. You should now be able to view live camera feeds that would otherwise not display in Chrome
+
+### Common DVR Interface Issues
+
+- Many DVR systems require ActiveX, Java, or Silverlight plugins
+- Some interfaces may show a blank screen in modern browsers
+- You may see prompts for missing plugins or "element not supported"
+- IE Tab resolves these issues by using the Internet Explorer rendering engine
+
+### Alternative Methods
+
+If IE Tab doesn't work with your specific DVR:
+
+1. Try using VLC Media Player with RTSP streams (often available at `rtsp://<dvr_ip>:<port>/ch01/0`)
+2. Look for a mobile app provided by the DVR manufacturer
+3. Some DVRs offer alternative HTML5 viewing options in their settings
+
+Remember that older DVR systems often have limited browser compatibility, which is part of why they may not have received security updates to patch vulnerabilities like CVE-2018-9995.
+
 ### Example Output
 
 ```
