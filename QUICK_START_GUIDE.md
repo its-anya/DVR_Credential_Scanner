@@ -7,7 +7,7 @@ This guide will help you get started with the DVR Credential Scanner tool quickl
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/DVR_Credential_Scanner.git
+git clone https://github.com/its-anya/DVR_Credential_Scanner.git
 ```
 
 ## Step 2: Install Python
